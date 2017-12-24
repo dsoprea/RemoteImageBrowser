@@ -1,0 +1,15 @@
+[uwsgi]
+module = rib.uwsgi
+callable = APP
+
+master = true
+processes = 2
+
+uid = www-data
+gid = www-data
+
+http = :9090
+
+die-on-term = true
+
+#logto = /var/log/uwsgi/%n.log

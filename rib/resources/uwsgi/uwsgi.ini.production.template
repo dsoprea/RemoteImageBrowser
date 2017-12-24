@@ -1,0 +1,16 @@
+[uwsgi]
+module = rib.uwsgi
+callable = APP
+
+master = true
+processes = 2
+
+uid = www-data
+gid = www-data
+
+socket = /tmp/remote_image_browser.sock
+chmod-socket = 660
+
+die-on-term = true
+
+#logto = /var/log/uwsgi/%n.log

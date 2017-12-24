@@ -1,0 +1,3 @@
+include rib/resources/README.rst
+include rib/resources/requirements.txt
+include rib/resources/version.txt

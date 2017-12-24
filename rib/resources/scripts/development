@@ -1,0 +1,21 @@
+#!/bin/sh
+
+APP_PATH=$(dirname $0)
+APP_PATH=$(readlink -f "${APP_PATH}/../../..")
+
+cd "${APP_PATH}"
+
+UWSGI_PATH="rib/resources/uwsgi"
+UWSGI_TEMPLATE_CONFIG_FILEPATH="${UWSGI_PATH}/uwsgi.ini.development.current"
+
+cp "${UWSGI_PATH}/uwsgi.ini.development.template" "${UWSGI_TEMPLATE_CONFIG_FILEPATH}"
+
+echo "chdir = ${APP_PATH}" >> "${UWSGI_TEMPLATE_CONFIG_FILEPATH}"
+
+if [ "${VIRTUAL_ENV}" != '' ]; then
+    echo "plugins = python" >> "${UWSGI_TEMPLATE_CONFIG_FILEPATH}"
+    echo "virtualenv = ${VIRTUAL_ENV}" >> "${UWSGI_TEMPLATE_CONFIG_FILEPATH}"
+fi
+
+uwsgi --ini "${UWSGI_TEMPLATE_CONFIG_FILEPATH}" $*
+#--stats 127.0.0.1:9191
