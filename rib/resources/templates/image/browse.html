@@ -17,29 +17,37 @@ Image Browser - (Root)
 </h2>
 
 {% if directories %}
+<div id="directories" class="images" style="margin-bottom: 100px; height: 100px">
+    {% for entry in directories %}
+    <div class="thumbnail directory" style="float: left; border: 2px solid red; ">
+        {% if rel_path %}
+        <a href="/image/browse?path={{ rel_path }}/{{ entry.filename }}">
+            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
+        </a>
+        {% else %}
+        <a href="/image/browse?path={{ entry.filename }}">
+            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
+        </a>
+        {% endif %}
+    </div>
+    {% endfor %}
 
-{% for entry in directories %}
-    {% if rel_path %}
-    DIRECTORY: <a href="/image/browse?path={{ rel_path }}/{{ entry.filename }}">{{ entry.filename }}</a><br />
-    {% else %}
-    DIRECTORY: <a href="/image/browse?path={{ entry.filename }}">{{ entry.filename }}</a><br />
-    {% endif %}
-{% endfor %}
-
+    <div style="clear: both; " />
+</div>
 {% endif %}
 
 {% if files %}
+<div id="files" class="images">
+    {% for entry in files %}
+    <div class="thumbnail file" float="left" style="float: left; border: 2px solid black; ">
+        <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank">
+            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
+        </a>
+    </div>
+    {% endfor %}
 
-{% if directories %}
-<br />
-{% endif %}
-
-{% for entry in files %}
-    <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank">
-        <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" /><br /><br />
-    </a>
-{% endfor %}
-
+    <div style="clear: both; " />
+</div>
 {% endif %}
 
 {% endblock %}

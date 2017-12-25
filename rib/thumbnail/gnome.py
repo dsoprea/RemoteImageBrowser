@@ -1,4 +1,5 @@
 import os
+import logging
 
 import gi
 gi.require_version('GnomeDesktop', '3.0')
@@ -8,6 +9,8 @@ import gi.repository.Gio
 import gi.repository.GnomeDesktop
 
 import rib.exception
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class GnomeThumbnailer(object):

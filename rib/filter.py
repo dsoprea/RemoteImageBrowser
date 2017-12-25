@@ -46,6 +46,11 @@ class Filter(object):
     def include(self, local_filepath):
         filename = os.path.basename(local_filepath)
 
+        # Ignore hidden files (which implicitly ignores the pictures used for
+        # directory images).
+        if filename[0] == '.':
+            return False
+
         if os.path.isdir(local_filepath) is True:
             # If there include paths, the default policy is to exclude.
 
