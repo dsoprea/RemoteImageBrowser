@@ -1,0 +1,45 @@
+{% extends "_base.html" %}
+
+{% block title %}{% if rel_path %}
+Image Browser - {{ rel_path }}
+{% else %}
+Image Browser - (Root)
+{% endif %}{% endblock %}
+
+{% block body %}
+
+<h2>
+{% if rel_path %}
+{{ rel_path }}
+{% else %}
+(Root)
+{% endif %}
+</h2>
+
+{% if directories %}
+
+{% for entry in directories %}
+    {% if rel_path %}
+    DIRECTORY: <a href="/image/browse?path={{ rel_path }}/{{ entry.filename }}">{{ entry.filename }}</a><br />
+    {% else %}
+    DIRECTORY: <a href="/image/browse?path={{ entry.filename }}">{{ entry.filename }}</a><br />
+    {% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% if files %}
+
+{% if directories %}
+<br />
+{% endif %}
+
+{% for entry in files %}
+    <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank">
+        <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" /><br /><br />
+    </a>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
