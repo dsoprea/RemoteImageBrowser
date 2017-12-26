@@ -1,2 +1,3 @@
-uWSGI==2.0.15
-Flask==0.12.2
+nose
+uWSGI
+Flask

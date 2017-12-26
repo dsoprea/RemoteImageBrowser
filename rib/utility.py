@@ -2,6 +2,8 @@ import os
 import logging
 import fnmatch
 
+import rib.compat
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -26,3 +28,11 @@ class Utility(object):
     def get_image_root(self):
         return os.environ['IMAGE_ROOT'].rstrip('/')
 
+    def urlencode_filter(self, s):
+        if type(s) == 'Markup':
+            s = s.unescape()
+
+        s = s.encode('utf8')
+        s = rib.compat.escape_url(s)
+
+        return s

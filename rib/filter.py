@@ -43,6 +43,25 @@ class Filter(object):
 
         _LOGGER.debug("EXCLUDE_FILES = {}".format(self._exclude_files))
 
+    def _include_path(self, path):
+        name = os.path.basename(path)
+
+        if self._include_paths:
+            for filespec in self._include_paths:
+                if fnmatch.fnmatch(name, filespec) is True:
+                    return True
+
+            return False
+
+        # If there were exclude paths, the default policy is to include.
+        if self._exclude_paths:
+            for filespec in self._exclude_paths:
+                if fnmatch.fnmatch(name, filespec) is True:
+                    return False
+
+        # Triggers if no includes or excludes, or neither.
+        return True
+
     def include(self, local_filepath):
         filename = os.path.basename(local_filepath)
 
@@ -51,26 +70,12 @@ class Filter(object):
         if filename[0] == '.':
             return False
 
-        if os.path.isdir(local_filepath) is True:
-            # If there include paths, the default policy is to exclude.
-
-            if self._include_paths:
-                for filespec in self._include_paths:
-                    if fnmatch.fnmatch(filename, filespec) is True:
-                        return True
-
-                return False
-
-            # If there were exclude paths, the default policy is to include.
-            if self._exclude_paths:
-                for filespec in self._exclude_paths:
-                    if fnmatch.fnmatch(filename, filespec) is True:
-                        return False
-
-            # Triggers if no includes or excludes, or neither.
-            return True
-        else:
+        if os.path.isdir(local_filepath) is False:
             # If there includes, the default policy is to exclude.
+
+            parent_path = os.path.dirname(local_filepath)
+            if parent_path != '' and self._include_path(parent_path) is False:
+                return False
 
             if self._include_files:
                 for filespec in self._include_files:
@@ -87,3 +92,6 @@ class Filter(object):
 
             # Triggers if no includes or excludes, or neither.
             return True
+        else:
+            # If there include paths, the default policy is to exclude.
+            return self._include_path(local_filepath)

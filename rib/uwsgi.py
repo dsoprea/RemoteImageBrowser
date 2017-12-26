@@ -12,4 +12,9 @@ import rib.handler.system.ping
 import rib.handler.static
 import rib.handler.root
 
+# TODO(dustin): This configures to print to the console. How to use UWSGI for logging?
+#
+# import rib.config.log
+# rib.config.log.configure()
+
 APP = rib.app.APP
