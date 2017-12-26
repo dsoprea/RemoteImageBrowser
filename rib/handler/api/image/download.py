@@ -18,7 +18,7 @@ def _get_image_root():
 
 @rib.app.APP.route("/api/image/download", methods=['GET'])
 def api_image_download_get():
-    rel_filepath = flask.request.args.get('rel_filepath', '')
+    rel_filepath = flask.request.args.get('filepath', '')
 
     if rel_filepath == '':
         raise \

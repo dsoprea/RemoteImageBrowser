@@ -11,4 +11,5 @@ template_path = \
 
 APP = flask.Flask(
         rib.config.server.WEBSERVER_NAME,
-        template_folder=template_path)
+        template_folder=template_path,
+        static_url_path='/static')

@@ -13,6 +13,10 @@ import rib.exception
 _LOGGER = logging.getLogger(__name__)
 
 
+class ThumbnailNotSupportedError(rib.exception.ImageError):
+    pass
+
+
 class GnomeThumbnailer(object):
     def generate(self, filepath):
         mtime = os.path.getmtime(filepath)
@@ -35,18 +39,19 @@ class GnomeThumbnailer(object):
 
         if thumbnail_filepath is None:
             can_thumbnail = factory.can_thumbnail(uri, mimetype, mtime)
-    # TODO(dustin): Might want to abstract this so the browse view knows which files to exclude.
+
+# TODO(dustin): Might want to abstract this so the browse view knows which files to exclude.
             if can_thumbnail is False:
                 raise \
-                    rib.exception.ImageError(
-                        "Does not support thumbnailing: [{}]".format(rel_filepath))
+                    ThumbnailNotSupportedError(
+                        "Does not support thumbnailing: [{}]".format(filepath))
 
             thumbnail = factory.generate_thumbnail(uri, mimetype)
 
             if thumbnail is None:
                 raise \
                     rib.exception.ImageError(
-                        "Thumbnail generation failed: [{}]".format(rel_filepath))
+                        "Thumbnail generation failed: [{}]".format(filepath))
 
             factory.save_thumbnail(thumbnail, uri, mtime)
             thumbnail_filepath = factory.lookup(uri, mtime)

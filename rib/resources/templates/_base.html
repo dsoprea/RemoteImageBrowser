@@ -1,6 +1,15 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
+
+        <script src="/s/js/jquery-3.2.1.min.js"></script>
+        <script src="/s/popper/popper.min.js"></script>
+
+        <link rel="stylesheet" href="/s/bootstrap/css/bootstrap.min.css">
+        <script src="/s/bootstrap/js/bootstrap.min.js"></script>
+<style type="text/css">
+{% block css %}{% endblock %}
+</style>
     </head>
     <body>
 {% block header %}{% endblock %}

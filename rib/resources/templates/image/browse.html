@@ -6,47 +6,70 @@ Image Browser - {{ rel_path }}
 Image Browser - (Root)
 {% endif %}{% endblock %}
 
+{% block css %}
+.media-body h5 {
+    font-weight: bold;
+}
+
+h2.page-heading {
+    padding: 20px 0px 20px 10px;
+}
+{% endblock %}
+
 {% block body %}
 
-<h2>
+<h2 class='page-heading'>
 {% if rel_path %}
-{{ rel_path }}
+/{{ rel_path }}
 {% else %}
-(Root)
+/
 {% endif %}
 </h2>
 
 {% if directories %}
-<div id="directories" class="images" style="margin-bottom: 100px; height: 100px">
+<div id="directories" class="images" style="">
     {% for entry in directories %}
-    <div class="thumbnail directory" style="float: left; border: 2px solid red; ">
-        {% if rel_path %}
-        <a href="/image/browse?path={{ rel_path }}/{{ entry.filename }}">
-            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
+<!--     <div class="thumbnail directory" class="rounded float-left">
+        <a href="/image/browse?path={{ entry.rel_filepath }}">
+            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" border="0" class="img-thumbnail" />
         </a>
-        {% else %}
-        <a href="/image/browse?path={{ entry.filename }}">
-            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
-        </a>
-        {% endif %}
     </div>
-    {% endfor %}
+ -->
+    <div class="media directory-entry" style="margin-bottom: 10px; padding-left: 10px; ">
+      <a href="/image/browse?path={{ entry.rel_filepath }}">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+      </a>
+      <div class="media-body">
+        <h5 class="mt-0">{{ entry.filename }}/</h5>
+        Modified: {{ entry.mtime_phrase }}<br />
+      </div>
+    </div>
 
-    <div style="clear: both; " />
+    {% endfor %}
 </div>
 {% endif %}
 
 {% if files %}
 <div id="files" class="images">
     {% for entry in files %}
-    <div class="thumbnail file" float="left" style="float: left; border: 2px solid black; ">
-        <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank">
-            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" />
+<!--     <div class="thumbnail file" style="">
+        <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank" class="rounded float-left">
+            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" border="0" class="img-thumbnail" />
         </a>
     </div>
-    {% endfor %}
+ -->
+    <div class="media file-entry" style="margin-bottom: 10px; padding-left: 10px; ">
+      <a href="/api/image/download?filepath={{ entry.rel_filepath }}" target="_blank">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+      </a>
+      <div class="media-body">
+        <h5 class="mt-0">{{ entry.filename }}</h5>
+        Modified: {{ entry.mtime_phrase }}<br />
+        Size: {{ entry.size_phrase }}M
+      </div>
+    </div>
 
-    <div style="clear: both; " />
+    {% endfor %}
 </div>
 {% endif %}
 

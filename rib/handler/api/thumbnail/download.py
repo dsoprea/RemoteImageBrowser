@@ -9,6 +9,7 @@ import gi.repository
 import gi.repository.Gio
 import gi.repository.GnomeDesktop
 
+import rib.config.directory
 import rib.app
 import rib.directory
 import rib.exception
@@ -17,7 +18,7 @@ import rib.thumbnail.gnome
 _LOGGER = logging.getLogger(__name__)
 
 def _get_image_root():
-    return os.environ['IMAGE_ROOT']
+    return os.environ['IMAGE_ROOT'].rstrip('/')
 
 @rib.app.APP.route("/api/thumbnail/download", methods=['GET'])
 def api_thumbnail_download_get():
@@ -25,7 +26,7 @@ def api_thumbnail_download_get():
     given path.
     """
 
-    rel_filepath = flask.request.args.get('rel_filepath', '')
+    rel_filepath = flask.request.args.get('filepath', '')
 
     if rel_filepath[0] == '/':
         raise \
@@ -39,8 +40,8 @@ def api_thumbnail_download_get():
     if os.path.exists(filepath) is False:
         raise \
             rib.exception.HttpFilesystemSubjectDoesNotExistError(
-                "Filepath does not exist in image-root: [{}]".format(
-                rel_filepath))
+                "Filepath does not exist in image-root: [{}]->[{}]".format(
+                rel_filepath, filepath))
 
     if os.path.isdir(filepath):
         d = rib.directory.Directory()
@@ -54,7 +55,15 @@ def api_thumbnail_download_get():
 # TODO(dustin): Make the thumbnail system pluggable for systems that don't have or don't want to use Gnome.
 
     g = rib.thumbnail.gnome.GnomeThumbnailer()
-    thumbnail_filepath, mimetype = g.generate(filepath)
+
+    try:
+        thumbnail_filepath, mimetype = g.generate(filepath)
+    except rib.thumbnail.gnome.ThumbnailNotSupportedError:
+# TODO(dustin): Move to general config.
+        thumbnail_filepath = \
+            rib.config.directory.DIRECTORY_THUMBNAIL_PLACEHOLDER_FILEPATH
+# TODO(dustin): Move to config.
+        mimetype = 'image/png'
 
     return \
         flask.send_file(

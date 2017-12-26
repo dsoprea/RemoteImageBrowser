@@ -12,6 +12,7 @@ class FileNotAnImageError(Exception):
 class Utility(object):
     def detect_image(self, filepath):
         filename = os.path.basename(filepath)
+        filename = filename.lower()
 
         if fnmatch.fnmatch(filename, '*.jpg') is True:
             return 'image/jpeg'
