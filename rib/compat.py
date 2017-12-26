@@ -2,6 +2,8 @@ def escape_url(url):
     try:
         import urllib.parse
     except ImportError:
+        import urllib
+
         # 2.7
         return urllib.quote_plus(url)
     else:
