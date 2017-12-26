@@ -22,3 +22,7 @@ class Utility(object):
             return 'image/bmp'
 
         raise FileNotAnImageError(filepath)
+
+    def get_image_root(self):
+        return os.environ['IMAGE_ROOT'].rstrip('/')
+

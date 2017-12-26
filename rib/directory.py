@@ -29,9 +29,13 @@ class Directory(object):
             return filepath
 
         u = rib.utility.Utility()
+        f = rib.filter.Filter()
 
         for filename in sorted(os.listdir(path)):
             filepath = os.path.join(path, filename)
+
+            if f.include(filepath) is False:
+                continue
 
             try:
                 u.detect_image(filepath)

@@ -12,9 +12,7 @@ import gi.repository.GnomeDesktop
 import rib.app
 import rib.exception
 import rib.thumbnail.gnome
-
-def _get_image_root():
-    return os.environ['IMAGE_ROOT']
+import rib.utility
 
 @rib.app.APP.route("/api/image/download", methods=['GET'])
 def api_image_download_get():
@@ -31,7 +29,9 @@ def api_image_download_get():
                 "File-path must be relative: [{}]".format(
                 path))
 
-    image_root_path = _get_image_root()
+    u = rib.utility.Utility()
+    image_root_path = u.get_image_root()
+
     filepath = image_root_path + '/' + rel_filepath
 
     if os.path.exists(filepath) is False:

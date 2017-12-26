@@ -4,9 +4,7 @@ import os
 import rib.app
 import rib.exception
 import rib.filter
-
-def _get_image_root():
-    return os.environ['IMAGE_ROOT']
+import rib.utility
 
 @rib.app.APP.route("/api/image/browse", methods=['GET'])
 def api_image_browse_get():
@@ -18,7 +16,9 @@ def api_image_browse_get():
                 "Path must be relative to image-root or empty: [{}]".format(
                 path))
 
-    image_root_path = _get_image_root()
+    u = rib.utility.Utility()
+    image_root_path = u.get_image_root()
+
     path = image_root_path
 
     rel_path = rel_path.rstrip('/')

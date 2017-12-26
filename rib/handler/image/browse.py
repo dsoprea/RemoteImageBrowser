@@ -19,9 +19,6 @@ _ENTRY = \
             'size_phrase',
         ])
 
-def _get_image_root():
-    return os.environ['IMAGE_ROOT']
-
 @rib.app.APP.route("/image/browse", methods=['GET'])
 def image_browse_get():
     rel_path = flask.request.args.get('path', '')
@@ -32,7 +29,9 @@ def image_browse_get():
                 "Path must be relative to image-root or empty: [{}]".format(
                 path))
 
-    image_root_path = _get_image_root()
+    u = rib.utility.Utility()
+    image_root_path = u.get_image_root()
+
     path = image_root_path
 
     rel_path = rel_path.rstrip('/')
@@ -55,6 +54,7 @@ def image_browse_get():
     u = rib.utility.Utility()
 
     len_ = len(image_root_path)
+
     for filename in children:
         filepath = os.path.join(path, filename)
 
