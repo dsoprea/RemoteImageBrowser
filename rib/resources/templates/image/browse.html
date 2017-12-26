@@ -3,7 +3,7 @@
 {% block title %}{% if rel_path %}
 Image Browser - {{ rel_path }}
 {% else %}
-Image Browser - (Root)
+Image Browser
 {% endif %}{% endblock %}
 
 {% block css %}
@@ -17,6 +17,12 @@ h2.page-heading {
 {% endblock %}
 
 {% block body %}
+
+{% if rel_path %}
+<div style="padding-top: 10px; padding-left: 10px">
+<a class="btn btn-secondary" href="/image/browse?path={{ parent_rel_path }}" role="button">Up</a>
+</div>
+{% endif %}
 
 <h2 class='page-heading'>
 {% if rel_path %}

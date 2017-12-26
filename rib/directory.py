@@ -1,7 +1,7 @@
 import os
 import logging
 
-import rib.config.directory
+import rib.config
 import rib.directory_config
 import rib.utility
 
@@ -41,4 +41,4 @@ class Directory(object):
                 return filepath
 
         return \
-            rib.config.directory.DIRECTORY_THUMBNAIL_PLACEHOLDER_FILEPATH
+            rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH

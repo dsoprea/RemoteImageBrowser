@@ -91,7 +91,13 @@ def image_browse_get():
 
             files.append(e)
 
+    if path == '':
+        parent_rel_path = None
+    else:
+        parent_rel_path = os.path.dirname(rel_path)
+
     context = {
+        'parent_rel_path': parent_rel_path,
         'rel_path': rel_path,
         'files': files,
         'directories': directories,

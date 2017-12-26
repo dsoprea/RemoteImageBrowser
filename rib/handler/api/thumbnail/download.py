@@ -9,7 +9,7 @@ import gi.repository
 import gi.repository.Gio
 import gi.repository.GnomeDesktop
 
-import rib.config.directory
+import rib.config
 import rib.app
 import rib.directory
 import rib.exception
@@ -59,11 +59,11 @@ def api_thumbnail_download_get():
     try:
         thumbnail_filepath, mimetype = g.generate(filepath)
     except rib.thumbnail.gnome.ThumbnailNotSupportedError:
-# TODO(dustin): Move to general config.
         thumbnail_filepath = \
-            rib.config.directory.DIRECTORY_THUMBNAIL_PLACEHOLDER_FILEPATH
-# TODO(dustin): Move to config.
-        mimetype = 'image/png'
+            rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH
+
+        mimetype = \
+            rib.config.THUMBNAIL_PLACEHOLDER_MIMETYPE
 
     return \
         flask.send_file(
