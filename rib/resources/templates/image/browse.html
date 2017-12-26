@@ -65,7 +65,7 @@ h2.page-heading {
     </div>
  -->
     <div class="media file-entry" style="margin-bottom: 10px; padding-left: 10px; ">
-      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" target="_blank" data-featherlight="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}">
+      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" target="_blank" data-fancybox="gallery">
         <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
       </a>
       <div class="media-body">
