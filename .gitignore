@@ -1,1 +1,4 @@
 rib/resources/uwsgi/uwsgi.ini.*.current
+
+*.pyc
+

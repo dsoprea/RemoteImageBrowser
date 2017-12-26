@@ -15,7 +15,7 @@ class DirectoryConfig(object):
         try:
             with open(config_filepath) as f:
                 self.__config = json.load(f)
-        except FileNotFoundError:
+        except IOError:
             self.__config = {}
 
     @property

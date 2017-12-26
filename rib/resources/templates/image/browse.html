@@ -42,8 +42,8 @@ h2.page-heading {
     </div>
  -->
     <div class="media directory-entry" style="margin-bottom: 10px; padding-left: 10px; ">
-      <a href="/image/browse?path={{ entry.rel_filepath }}">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+      <a href="/image/browse?path={{ entry.rel_filepath | urlencode }}">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}/</h5>
@@ -65,8 +65,8 @@ h2.page-heading {
     </div>
  -->
     <div class="media file-entry" style="margin-bottom: 10px; padding-left: 10px; ">
-      <a href="/api/image/download?filepath={{ entry.rel_filepath }}" target="_blank">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" target="_blank">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}</h5>

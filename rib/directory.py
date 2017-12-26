@@ -15,7 +15,7 @@ class Directory(object):
         """
 
         thumbnail_filename = \
-            rib.config.directory.DEFAULT_DIRECTORY_THUMBNAIL_FILENAME
+            rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH
 
         db = rib.directory_config.DirectoryConfig(path)
         config_thumbnail_filename = db.directory_thumbnail_filename

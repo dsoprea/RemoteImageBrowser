@@ -1,5 +1,4 @@
 import flask
-import urllib.parse
 
 import rib.app
 

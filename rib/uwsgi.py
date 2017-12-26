@@ -1,4 +1,5 @@
 import rib.app
+import rib.filters
 
 import rib.handler.error
 

@@ -2,15 +2,15 @@ class HttpError(Exception):
     status_code = 501
     status_line = 'GENERAL ERROR'
 
-    def __init__(self, *args, data={}, **kwargs):
-        self.__data = data
-
+    def __init__(self, *args, **kwargs):
         super(HttpError, self).__init__(*args, **kwargs)
 
     def to_dict(self):
-        final_data = self.__data.copy()
-        final_data['message'] = str(self)
+        data = {
+            'message': str(self)
+        }
 
+        return data
 
 class HttpFilesystemError(HttpError):
     status_code = 502

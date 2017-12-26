@@ -38,7 +38,7 @@ def image_browse_get():
     rel_path = rel_path.rstrip('/')
 
     if rel_path != '':
-        path = os.path.join(path, rel_path)
+        path += os.sep + rel_path
 
     if os.path.exists(path) is False:
         raise \
