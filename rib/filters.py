@@ -1,6 +1,7 @@
 import urllib
 
 import rib.app
+import rib.compat
 
 @rib.app.APP.template_filter('urlencode')
 def urlencode_filter(s):
@@ -8,7 +9,7 @@ def urlencode_filter(s):
         s = s.unescape()
 
     s = s.encode('utf8')
-    s = urllib.quote_plus(s)
+    s = rib.compat.escape_url(s)
 
     return s
 
