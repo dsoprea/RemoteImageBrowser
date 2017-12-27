@@ -1,11 +1,11 @@
 Overview
---------
+========
 
 This application will produce a website that will allow you to browse a directory structure of images.
 
 
 Features
---------
+========
 
 - Python 2/3 compatible.
 - The Gnome thumbnailer uses Gnome's thumbnailing system. Any thumbnails already produced by images locally will be reused by the website. Any thumbnails produced by using the website will be reused locally.
@@ -16,7 +16,7 @@ Features
 
 
 Installation
-------------
+============
 
 To install from Github::
 
@@ -24,13 +24,13 @@ To install from Github::
 
 
 Configuration
--------------
+=============
 
-Configuration is done via environment variables. You may set this via the uWSGI command-line (see commands before, under 'Running', for an example) as well as at the user or system level (depending on how your uWSGI is started).
+Configuration is done via environment variables. You may set this via the command-line (see commands before, under 'Running', for an example) as well as at the user or system level (depending on how your uWSGI instance is configured).
 
 
 Configuring a Thumbnailer
--------------------------
+=========================
 
 The default thumbnailer uses PIL. To configure the thumbnailer, set the class-name into `THUMBNAILER_CLASS`:
 
@@ -39,7 +39,7 @@ The default thumbnailer uses PIL. To configure the thumbnailer, set the class-na
 
 
 Virtualenv
-----------
+==========
 
 Since Virtualenv obscures system-level packages and Gnomes "gi" package is not installable via PIP, extra steps are required to get this project working in a Virtualenv if you want to use the Gnome thumbnailer.
 
@@ -51,21 +51,61 @@ Once you get this project and create your Python 2.7 Virtualenv environment, pla
 
 
 Running
--------
+=======
+
+Development
+-----------
 
 Development mode (runs on :9090)::
 
     rib/resources/scripts/development --env IMAGE_ROOT_PATH=<IMAGE PATH>
 
-Production mode (runs on /tmp/remote_image_browser.sock)::
-
-    rib/resources/scripts/production --env IMAGE_ROOT_PATH=<IMAGE PATH>
-
 NOTE: The default PIL thumbnailer also requires the `THUMBNAIL_ROOT_PATH` variable to be defined. Create a path to store thumbnails in and then pass it in this variable.
+
+Production
+----------
+
+If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi/apps-enabled in Ubuntu).
+
+
+uWSGI
+=====
+
+uWSGI will automatically be installed by this project, but it will not yet be configured as a service in the system. If you'd like to, use the following instructions. Note that if you want to run this as a system service, it would be best to install it at the system level (not within a virtualenv).
+
+To quickly configure uWSGI to work as a system service under Ubuntu with *systemd*, write the following two files:
+
+/etc/uwsgi/emperor.ini::
+
+    [uwsgi]
+    emperor = /etc/uwsgi/apps-enabled
+    vassal-set = processes=8
+    vassal-set = enable-metrics=1
+    logto = /var/log/emperor.log
+
+/lib/systemd/system/emperor.service::
+
+    [Unit]
+    Description=uWSGI Emperor
+    After=syslog.target
+
+    [Service]
+    ExecStart=/usr/local/bin/uwsgi --ini /etc/uwsgi/emperor.ini
+    # Requires systemd version 211 or newer
+    RuntimeDirectory=uwsgi
+    Restart=always
+    KillSignal=SIGQUIT
+    Type=notify
+    NotifyAccess=all
+
+    [Install]
+    WantedBy=multi-user.target
+
+Don't forget to start it with "systemctl start".
 
 
 Screenshots
------------
+===========
 
 |browser1|
 
@@ -76,7 +116,7 @@ Screenshots
 
 
 Testing
--------
+=======
 
 To run the unit-tests::
 

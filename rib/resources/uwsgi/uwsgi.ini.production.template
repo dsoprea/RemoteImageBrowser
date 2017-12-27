@@ -14,3 +14,10 @@ chmod-socket = 660
 die-on-term = true
 
 #logto = /var/log/uwsgi/%n.log
+
+# Fill this out.
+chdir = <PROJECT PATH>
+
+# Uncomment and fill these out if using a Virtualenv.
+# plugins = python
+# virtualenv = <VIRTUALENV PATH>
