@@ -1,4 +1,4 @@
-rib/resources/uwsgi/uwsgi.ini.*.current
+/.coverage
+/rib/resources/uwsgi/uwsgi.ini.*.current
 
 *.pyc
-

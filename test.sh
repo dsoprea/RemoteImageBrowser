@@ -1,1 +1,1 @@
-nosetests -s -v tests
+nosetests -s -v --with-coverage --cover-package=rib tests
