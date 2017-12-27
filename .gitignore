@@ -2,5 +2,6 @@
 /rib/resources/uwsgi/uwsgi.ini.*.current
 /.tox/
 /remote_image_browser.egg-info/
+/dist/
 
 *.pyc
