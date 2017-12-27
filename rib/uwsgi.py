@@ -3,7 +3,6 @@ import rib.filters
 
 import rib.handler.error
 
-import rib.handler.api.image.browse
 import rib.handler.api.thumbnail.download
 import rib.handler.api.image.download
 
