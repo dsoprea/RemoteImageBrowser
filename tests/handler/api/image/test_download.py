@@ -11,7 +11,7 @@ class TestDownload(unittest.TestCase):
         import rib.handler.api.image.download
 
         with rib.test_support.environment(
-                IMAGE_ROOT=_ASSETS_PATH):
+                IMAGE_ROOT_PATH=_ASSETS_PATH):
             c = rib.test_support.get_test_client()
             r = c.get('/api/image/download?filepath=childpath/gorillababy.jpg')
 

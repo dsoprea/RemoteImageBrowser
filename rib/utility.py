@@ -26,7 +26,7 @@ class Utility(object):
         raise FileNotAnImageError(filepath)
 
     def get_image_root(self):
-        return os.environ['IMAGE_ROOT'].rstrip('/')
+        return os.environ['IMAGE_ROOT_PATH'].rstrip('/')
 
     def urlencode_filter(self, s):
         if type(s) == 'Markup':

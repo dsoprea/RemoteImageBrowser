@@ -25,7 +25,7 @@ class TestUtility(unittest.TestCase):
 
     def test_get_image_root__no_escapes(self):
         with rib.test_support.environment(
-                IMAGE_ROOT='image/root/'):
+                IMAGE_ROOT_PATH='image/root/'):
             u = rib.utility.Utility()
             path = u.get_image_root()
 
