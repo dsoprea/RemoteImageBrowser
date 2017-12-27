@@ -35,15 +35,9 @@ h2.page-heading {
 {% if directories %}
 <div id="directories" class="images" style="">
     {% for entry in directories %}
-<!--     <div class="thumbnail directory" class="rounded float-left">
-        <a href="/image/browse?path={{ entry.rel_filepath }}">
-            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" border="0" class="img-thumbnail" />
-        </a>
-    </div>
- -->
     <div class="media directory-entry" style="margin-bottom: 10px; padding-left: 10px; ">
       <a href="/image/browse?path={{ entry.rel_filepath | urlencode }}">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" style="width: 128px; ">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}/</h5>
@@ -58,15 +52,9 @@ h2.page-heading {
 {% if files %}
 <div id="files" class="images">
     {% for entry in files %}
-<!--     <div class="thumbnail file" style="">
-        <a href="/api/image/download?rel_filepath={{ entry.rel_filepath }}" target="_blank" class="rounded float-left">
-            <img src="/api/thumbnail/download?rel_filepath={{ entry.rel_filepath }}" border="0" class="img-thumbnail" />
-        </a>
-    </div>
- -->
     <div class="media file-entry" style="margin-bottom: 10px; padding-left: 10px; ">
-      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" target="_blank" data-fancybox="gallery">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" alt="{{ entry.rel_filepath }}" style="width: 128px; ">
+      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" class="fancybox" data-fancybox="gallery" data-caption="{{ entry.rel_filepath }}">
+        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" style="width: 128px; ">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}</h5>
