@@ -14,7 +14,8 @@ with open(os.path.join(_RESOURCES_PATH, 'version.txt')) as f:
     _VERSION = f.read().strip()
 
 _DESCRIPTION = \
-    "A server that allows you to browse your image library from a website with thumbnails (cached) and lightboxes."
+    "Allows you to efficiently browse a large image-file hierarchy from a " \
+    "website with thumbnails (cached) and lightboxes."
 
 setuptools.setup(
     name='remote_image_browser',

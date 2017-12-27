@@ -70,6 +70,8 @@ Production
 
 If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi/apps-enabled in Ubuntu).
 
+Don't forget to configure the environment variables already mentioned (`IMAGE_ROOT_PATH`, `THUMBNAIL_ROOT_PATH`) either in uWSGI or at the system elvel (e.g. /etc/environment, in Ubuntu).
+
 
 uWSGI
 =====
@@ -110,12 +112,9 @@ Don't forget to start it with "systemctl start".
 Screenshots
 ===========
 
-|browser1|
+|screenshot1|
 
-|browser2|
-
-.. |browser1| image:: rib/resources/images/screenshot1.png
-.. |browser2| image:: rib/resources/images/screenshot2.png
+|screenshot2|
 
 
 Testing
@@ -125,6 +124,8 @@ To run the unit-tests::
 
     $ ./test.sh
 
+.. |screenshot1| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot1.png
+.. |screenshot2| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot2.png
 .. |Build_Status| image:: https://travis-ci.org/dsoprea/RemoteImageBrowser.svg?branch=master
    :target: https://travis-ci.org/dsoprea/RemoteImageBrowser
 .. |Coverage_Status| image:: https://coveralls.io/repos/github/dsoprea/RemoteImageBrowser/badge.svg?branch=master
