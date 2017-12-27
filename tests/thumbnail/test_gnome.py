@@ -11,7 +11,7 @@ _ASSETS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'as
 class TestGnome(unittest.TestCase):
     def test_generate(self):
         try:
-            import rib.thumbnail.gnome
+            import gi
         except ImportError:
             is_loaded = False
         else:

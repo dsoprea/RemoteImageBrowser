@@ -4,7 +4,6 @@ import imghdr
 
 import rib.app
 import rib.exception
-import rib.thumbnail.gnome
 import rib.utility
 
 @rib.app.APP.route("/api/image/download", methods=['GET'])

@@ -11,7 +11,15 @@ _ASSETS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..
 
 class TestDownload(unittest.TestCase):
     def test_get__gnome(self):
-        import rib.handler.api.thumbnail.download
+        try:
+            import gi
+        except ImportError:
+            is_loaded = False
+        else:
+            is_loaded = True
+
+        if is_loaded is False:
+            raise unittest.SkipTest("Gnome not available.")
 
         with rib.test_support.environment(
                 IMAGE_ROOT_PATH=_ASSETS_PATH,
