@@ -70,6 +70,8 @@ Production
 
 If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi/apps-enabled in Ubuntu).
 
+Don't forget to configure the environment variables already mentioned (`IMAGE_ROOT_PATH`, `THUMBNAIL_ROOT_PATH`) either in uWSGI or at the system elvel (e.g. /etc/environment, in Ubuntu).
+
 
 uWSGI
 =====
