@@ -1,3 +1,6 @@
+|Build\_Status|
+|Coverage\_Status|
+
 Overview
 ========
 
@@ -121,3 +124,8 @@ Testing
 To run the unit-tests::
 
     $ ./test.sh
+
+.. |Build_Status| image:: https://travis-ci.org/dsoprea/RemoteImageBrowser.svg?branch=master
+   :target: https://travis-ci.org/dsoprea/RemoteImageBrowser
+.. |Coverage_Status| image:: https://coveralls.io/repos/github/dsoprea/RemoteImageBrowser/badge.svg?branch=master
+   :target: https://coveralls.io/github/dsoprea/RemoteImageBrowser?branch=master
