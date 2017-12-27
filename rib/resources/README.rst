@@ -112,12 +112,9 @@ Don't forget to start it with "systemctl start".
 Screenshots
 ===========
 
-|browser1|
+|screenshot1|
 
-|browser2|
-
-.. |browser1| image:: rib/resources/images/screenshot1.png
-.. |browser2| image:: rib/resources/images/screenshot2.png
+|screenshot2|
 
 
 Testing
@@ -127,6 +124,8 @@ To run the unit-tests::
 
     $ ./test.sh
 
+.. |screenshot1| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot1.png
+.. |screenshot2| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot2.png
 .. |Build_Status| image:: https://travis-ci.org/dsoprea/RemoteImageBrowser.svg?branch=master
    :target: https://travis-ci.org/dsoprea/RemoteImageBrowser
 .. |Coverage_Status| image:: https://coveralls.io/repos/github/dsoprea/RemoteImageBrowser/badge.svg?branch=master
