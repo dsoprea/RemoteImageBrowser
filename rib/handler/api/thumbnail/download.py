@@ -2,13 +2,6 @@ import flask
 import os
 import logging
 
-import gi
-gi.require_version('GnomeDesktop', '3.0')
-
-import gi.repository
-import gi.repository.Gio
-import gi.repository.GnomeDesktop
-
 import rib.config
 import rib.config.handler.api.thumbnail.download
 import rib.app

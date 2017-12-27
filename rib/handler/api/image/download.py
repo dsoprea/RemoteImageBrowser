@@ -2,13 +2,6 @@ import flask
 import os
 import imghdr
 
-import gi
-gi.require_version('GnomeDesktop', '3.0')
-
-import gi.repository
-import gi.repository.Gio
-import gi.repository.GnomeDesktop
-
 import rib.app
 import rib.exception
 import rib.thumbnail.gnome
