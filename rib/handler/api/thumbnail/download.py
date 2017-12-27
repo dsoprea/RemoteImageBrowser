@@ -10,10 +10,11 @@ import gi.repository.Gio
 import gi.repository.GnomeDesktop
 
 import rib.config
+import rib.config.handler.api.thumbnail.download
 import rib.app
 import rib.directory
 import rib.exception
-import rib.thumbnail.gnome
+import rib.thumbnail.thumbnailer_base
 import rib.utility
 
 _LOGGER = logging.getLogger(__name__)
@@ -54,10 +55,26 @@ def api_thumbnail_download_get():
 
 # TODO(dustin): Make the thumbnail system pluggable for systems that don't have or don't want to use Gnome.
 
-    g = rib.thumbnail.gnome.GnomeThumbnailer()
+    fq_class = \
+        os.environ.get(
+            'THUMBNAILER_CLASS',
+            rib.config.handler.api.thumbnail.download.DEFAULT_THUMBNAILER_FQ_CLASS)
+
+    pivot = fq_class.rindex('.')
+    fq_module = fq_class[:pivot]
+    class_name = fq_class[pivot + 1:]
+
+    m = __import__(fq_module, fromlist=[class_name])
+    cls = getattr(m, class_name)
+
+    assert \
+        issubclass(cls, rib.thumbnail.thumbnailer_base.ThumbnailerBase) is True, \
+        "Thumbnailer does not have correct baseclass: [{}]".format(fq_class)
+
+    t = cls()
 
     try:
-        thumbnail_filepath, mimetype = g.generate(filepath)
+        thumbnail_filepath, mimetype = t.generate(filepath)
     except rib.thumbnail.gnome.ThumbnailNotSupportedError:
         thumbnail_filepath = \
             rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH
@@ -65,7 +82,16 @@ def api_thumbnail_download_get():
         mimetype = \
             rib.config.THUMBNAIL_PLACEHOLDER_MIMETYPE
 
-    return \
-        flask.send_file(
+    sf = flask.send_file(
             thumbnail_filepath,
             mimetype=mimetype)
+
+    r = flask.make_response(sf)
+
+    send_thumbnailer = \
+        bool(int(os.environ.get('DO_RETURN_THUMBNAILER_NAME', '0')))
+
+    if send_thumbnailer is True:
+        r.headers['X-THUMBNAILER'] = class_name
+
+    return r

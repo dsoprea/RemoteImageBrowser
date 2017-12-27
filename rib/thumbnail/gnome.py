@@ -9,6 +9,7 @@ import gi.repository.Gio
 import gi.repository.GnomeDesktop
 
 import rib.exception
+import rib.thumbnail.thumbnailer_base
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class ThumbnailNotSupportedError(rib.exception.ImageError):
     pass
 
 
-class GnomeThumbnailer(object):
+class GnomeThumbnailer(rib.thumbnail.thumbnailer_base.ThumbnailerBase):
     def generate(self, filepath):
         mtime = os.path.getmtime(filepath)
 
