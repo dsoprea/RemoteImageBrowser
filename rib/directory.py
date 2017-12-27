@@ -2,8 +2,10 @@ import os
 import logging
 
 import rib.config
+import rib.config.directory
 import rib.directory_config
 import rib.utility
+import rib.filter
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -15,7 +17,7 @@ class Directory(object):
         """
 
         thumbnail_filename = \
-            rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH
+            rib.config.directory.DIRECTORY_THUMBNAIL_FILENAME
 
         db = rib.directory_config.DirectoryConfig(path)
         config_thumbnail_filename = db.directory_thumbnail_filename
@@ -33,6 +35,9 @@ class Directory(object):
 
         for filename in sorted(os.listdir(path)):
             filepath = os.path.join(path, filename)
+
+            if os.path.isdir(filepath) is True:
+                continue
 
             if f.include(filepath) is False:
                 continue

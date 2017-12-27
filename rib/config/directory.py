@@ -1,0 +1,1 @@
+DIRECTORY_THUMBNAIL_FILENAME = '.directory.jpg'
