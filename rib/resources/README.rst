@@ -35,6 +35,18 @@ Once you get this project and create your Python 2.7 Virtualenv environment, pla
     $ ln -s /usr/lib/python2.7/dist-packages/gi
 
 
+Running
+-------
+
+Development mode (runs on :9090)::
+
+    rib/resources/scripts/development --env IMAGE_ROOT=<IMAGE PATH>
+
+Production mode (runs on /tmp/remote_image_browser.sock)::
+
+    rib/resources/scripts/production --env IMAGE_ROOT=<IMAGE PATH>
+
+
 Screenshots
 -----------
 
