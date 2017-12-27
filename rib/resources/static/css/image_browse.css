@@ -1,0 +1,25 @@
+.media-body h5 {
+    font-weight: bold;
+}
+
+#directories .media-body h5 {
+    color: DarkBlue;
+}
+
+h2.page-heading {
+    padding: 20px 0px 20px 10px;
+}
+
+.images div.media {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+#top-button {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+img.thumbnail {
+    width: 128px;
+}

@@ -32,7 +32,7 @@ Configuration is done via environment variables. You may set this via the uWSGI 
 Configuring a Thumbnailer
 -------------------------
 
-The default thumbnailer uses PIL. To configure the thumbnailer, set the class-name into THUMBNAILER_CLASS:
+The default thumbnailer uses PIL. To configure the thumbnailer, set the class-name into `THUMBNAILER_CLASS`:
 
 - rib.thumbnail.pil.PilThumbnailer
 - rib.thumbnail.gnome.GnomeThumbnailer
@@ -60,6 +60,8 @@ Development mode (runs on :9090)::
 Production mode (runs on /tmp/remote_image_browser.sock)::
 
     rib/resources/scripts/production --env IMAGE_ROOT_PATH=<IMAGE PATH>
+
+NOTE: The default PIL thumbnailer also requires the `THUMBNAIL_ROOT_PATH` variable to be defined. Create a path to store thumbnails in and then pass it in this variable.
 
 
 Screenshots

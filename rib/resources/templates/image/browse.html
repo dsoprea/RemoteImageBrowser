@@ -6,21 +6,15 @@ Image Browser - {{ rel_path }}
 Image Browser
 {% endif %}{% endblock %}
 
-{% block css %}
-.media-body h5 {
-    font-weight: bold;
-}
-
-h2.page-heading {
-    padding: 20px 0px 20px 10px;
-}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/s/css/image_browse.css">
 {% endblock %}
 
 {% block body %}
 
 {% if rel_path %}
-<div style="padding-top: 10px; padding-left: 10px">
-<a class="btn btn-secondary" href="/image/browse?path={{ parent_rel_path }}" role="button">Up</a>
+<div id="top-button">
+  <a class="btn btn-secondary" href="/image/browse?path={{ parent_rel_path }}" role="button">Up</a>
 </div>
 {% endif %}
 
@@ -33,11 +27,11 @@ h2.page-heading {
 </h2>
 
 {% if directories %}
-<div id="directories" class="images" style="">
+<div id="directories" class="images">
     {% for entry in directories %}
-    <div class="media directory-entry" style="margin-bottom: 10px; padding-left: 10px; ">
+    <div class="media">
       <a href="/image/browse?path={{ entry.rel_filepath | urlencode }}">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" style="width: 128px; ">
+        <img class="mr-3 thumbnail" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}/</h5>
@@ -52,9 +46,9 @@ h2.page-heading {
 {% if files %}
 <div id="files" class="images">
     {% for entry in files %}
-    <div class="media file-entry" style="margin-bottom: 10px; padding-left: 10px; ">
+    <div class="media">
       <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" class="fancybox" data-fancybox="gallery" data-caption="{{ entry.rel_filepath }}">
-        <img class="mr-3" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}" style="width: 128px; ">
+        <img class="mr-3 thumbnail" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}">
       </a>
       <div class="media-body">
         <h5 class="mt-0">{{ entry.filename }}</h5>
