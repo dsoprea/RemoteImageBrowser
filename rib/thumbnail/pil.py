@@ -26,7 +26,7 @@ class PilThumbnailer(rib.thumbnail.thumbnailer_base.ThumbnailerBase):
         filename = os.path.basename(filepath)
         _, extension = os.path.splitext(filename)
 
-        thumbnail_filename = hashlib.sha1(filepath).hexdigest() + extension
+        thumbnail_filename = hashlib.sha1(filepath.encode('utf-8')).hexdigest() + extension
         thumbnail_filepath = os.path.join(self.__path, thumbnail_filename)
 
         if os.path.exists(thumbnail_filepath) is False:

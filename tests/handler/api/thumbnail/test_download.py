@@ -1,6 +1,6 @@
 import os
 import unittest
-import StringIO
+import io
 
 import PIL.Image
 
@@ -21,6 +21,8 @@ class TestDownload(unittest.TestCase):
         if is_loaded is False:
             raise unittest.SkipTest("Gnome not available.")
 
+        import rib.handler.api.thumbnail.download
+
         with rib.test_support.environment(
                 IMAGE_ROOT_PATH=_ASSETS_PATH,
                 THUMBNAILER_CLASS='rib.thumbnail.gnome.GnomeThumbnailer',
@@ -32,7 +34,7 @@ class TestDownload(unittest.TestCase):
             self.assertEquals(r.status_code, 200)
             self.assertEquals(r.headers['X-THUMBNAILER'], 'GnomeThumbnailer')
 
-            s = StringIO.StringIO(r.data)
+            s = io.BytesIO(r.data)
             im = PIL.Image.open(s)
             self.assertTrue(im.size[0] <= 128)
             self.assertTrue(im.size[1] <= 128)
@@ -53,7 +55,7 @@ class TestDownload(unittest.TestCase):
                 self.assertEquals(r.status_code, 200)
                 self.assertEquals(r.headers['X-THUMBNAILER'], 'PilThumbnailer')
 
-                s = StringIO.StringIO(r.data)
+                s = io.BytesIO(r.data)
                 im = PIL.Image.open(s)
                 self.assertTrue(im.size[0] <= 128)
                 self.assertTrue(im.size[1] <= 128)

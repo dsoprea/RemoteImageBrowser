@@ -1,15 +1,32 @@
 import os
 import unittest
-import HTMLParser
 
 import rib.test_support
 
 
-class TestParser(HTMLParser.HTMLParser):
+try:
+    import HTMLParser
+except ImportError:
+    # Python 3
+
+    import html.parser
+
+    class _TestParserBase(html.parser.HTMLParser):
+        def __init__(self, *args, **kwargs):
+            html.parser.HTMLParser.__init__(self, *args, **kwargs)
+else:
+    # Python 2
+
+    class _TestParserBase(HTMLParser.HTMLParser):
+        def __init__(self, *args, **kwargs):
+            HTMLParser.HTMLParser.__init__(self, *args, **kwargs)
+
+
+class TestParser(_TestParserBase):
     def __init__(self, *args, **kwargs):
         self.__images = []
 
-        HTMLParser.HTMLParser.__init__(self, *args, **kwargs)
+        _TestParserBase.__init__(self, *args, **kwargs)
 
     def handle_starttag(self, tag, attrs):
         if tag != 'img':
@@ -49,7 +66,7 @@ class TestBrowse(unittest.TestCase):
                 self.assertEquals(r.status_code, 200)
 
                 p = TestParser()
-                p.feed(r.data)
+                p.feed(str(r.data))
 
                 expected = [
                     '/api/thumbnail/download?filepath=subdir',
@@ -73,7 +90,7 @@ class TestBrowse(unittest.TestCase):
                 self.assertEquals(r.status_code, 200)
 
                 p = TestParser()
-                p.feed(r.data)
+                p.feed(str(r.data))
 
                 expected = [
                     '/api/thumbnail/download?filepath=subdir%2Fimage3.jpg',

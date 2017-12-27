@@ -23,6 +23,8 @@ class TestGnome(unittest.TestCase):
         image_filepath = \
             os.path.join(_ASSETS_PATH, 'childpath', 'gorillababy.jpg')
 
+        import rib.thumbnail.gnome
+
         gt = rib.thumbnail.gnome.GnomeThumbnailer()
         thumbnail_filepath, thumbnail_mimetype = \
             gt.generate(image_filepath)

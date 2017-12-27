@@ -12,7 +12,7 @@ class TestPing(unittest.TestCase):
 
         self.assertEquals(r.status_code, 200)
 
-        expected = """\
+        expected = b"""\
 {}
 """
 
