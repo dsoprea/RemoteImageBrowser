@@ -21,9 +21,11 @@ Features
 Installation
 ============
 
-To install from Github::
+To install::
 
-    $ python setup.py install
+    $ git clone https://github.com/dsoprea/RemoteImageBrowser.git
+    $ cd RemoteImageBrowser
+    $ pip install -r requirements.txt
 
 
 Configuration
@@ -37,8 +39,8 @@ Configuring a Thumbnailer
 
 The default thumbnailer uses PIL. To configure the thumbnailer, set the class-name into `THUMBNAILER_CLASS`:
 
-- rib.thumbnail.pil.PilThumbnailer
-- rib.thumbnail.gnome.GnomeThumbnailer
+- `rib.thumbnail.pil.PilThumbnailer`
+- `rib.thumbnail.gnome.GnomeThumbnailer`
 
 
 Virtualenv
