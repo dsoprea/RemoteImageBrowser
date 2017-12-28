@@ -50,7 +50,7 @@ Since Virtualenv obscures system-level packages and Gnomes "gi" package is not i
 
 Once you get this project and create your Python 2.7 Virtualenv environment, place symlinks for the "gi" and "gobject" Gnome packages. On Ubuntu 14.04, this looks like::
 
-    $ cd <virtualenv path>/lib/python2.7/site-packages
+    $ cd <virtualenv path>/lib/python2.7
     $ ln -s /usr/lib/python2.7/dist-packages/gobject
     $ ln -s /usr/lib/python2.7/dist-packages/gi
 
@@ -70,45 +70,88 @@ NOTE: The default PIL thumbnailer also requires the `THUMBNAIL_ROOT_PATH` variab
 Production
 ----------
 
-If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi/apps-enabled in Ubuntu).
+If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi-emperor/vassals in Ubuntu 16.04).
 
 Don't forget to configure the environment variables already mentioned (`IMAGE_ROOT_PATH`, `THUMBNAIL_ROOT_PATH`) either in uWSGI or at the system elvel (e.g. /etc/environment, in Ubuntu).
 
 
-uWSGI
-=====
+uWSGI Configuration Example
+===========================
 
-uWSGI will automatically be installed by this project, but it will not yet be configured as a service in the system. If you'd like to, use the following instructions. Note that if you want to run this as a system service, it would be best to install it at the system level (not within a virtualenv).
+This will setup the application server the listen on socket-file /tmp/remote_image_browser.sock .
 
-To quickly configure uWSGI to work as a system service under Ubuntu with *systemd*, write the following two files:
+Requirements:
 
-/etc/uwsgi/emperor.ini::
+- Python 2.7
+- Ubuntu 16.04
+- Virtualenv
+- Gnome thumbnailer
+- Installed in */opt/remote_image_browser*
+- Directory owned by *dustin:dustin*
+
+To setup uWSGI (to host a production configuration) under Ubuntu, install uWSGI::
+
+    sudo apt-get install uwsgi-emperor uwsgi-plugin-python
+
+Take the *rib/resources/uwsgi/uwsgi.ini.production.template* file and modify it to look like::
 
     [uwsgi]
-    emperor = /etc/uwsgi/apps-enabled
-    vassal-set = processes=8
-    vassal-set = enable-metrics=1
-    logto = /var/log/emperor.log
+    module = rib.uwsgi
+    callable = APP
 
-/lib/systemd/system/emperor.service::
+    master = true
+    processes = 2
 
-    [Unit]
-    Description=uWSGI Emperor
-    After=syslog.target
+    uid = dustin
+    gid = dustin
 
-    [Service]
-    ExecStart=/usr/local/bin/uwsgi --ini /etc/uwsgi/emperor.ini
-    # Requires systemd version 211 or newer
-    RuntimeDirectory=uwsgi
-    Restart=always
-    KillSignal=SIGQUIT
-    Type=notify
-    NotifyAccess=all
+    socket = /tmp/remote_image_browser.sock
 
-    [Install]
-    WantedBy=multi-user.target
+    # We want the process to be run as dustin:dustin
+    chmod-socket = 666
 
-Don't forget to start it with "systemctl start".
+    die-on-term = true
+
+    #logto = /var/log/uwsgi/%n.log
+
+    chdir = /opt/remote_image_browser
+    plugins = python
+    virtualenv = /opt/remote_image_browser
+
+    env = IMAGE_ROOT_PATH=<IMAGE ROOT PATH>
+    env = THUMBNAILER_CLASS=rib.thumbnail.gnome.GnomeThumbnailer
+
+Install this config as a vassal (website) under the emperor (uWSGI service) by symlinking it into /etc/uwsgi-emperor/vassals/remote_image_browser.ini .
+
+Start/restart the service with "systemctl restart uwsgi-emperor.service".
+
+Both the user/group in the config and the service user/group must be set so that the application can access the images (which should only be readable by "dustin"). So, now update the emperor's settings in */etc/uwsgi-emperor/emperor.ini*::
+
+    # user identifier of uWSGI processes
+    uid = dustin
+
+    # group identifier of uWSGI processes
+    gid = dustin
+
+Note that the permissions on the socket were configured as 666, above, so Nginx should not have any permission problems.
+
+
+Nginx Configuration Example
+===========================
+
+/etc/nginx/sites-enabled
+
+server {
+    listen 9090;
+    server_name localhost;
+
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/tmp/remote_image_browser.sock;
+    }
+}
+
+Start/restart the service with "systemctl restart nginx.service".
 
 
 Screenshots
