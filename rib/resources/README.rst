@@ -70,15 +70,15 @@ NOTE: The default PIL thumbnailer also requires the `THUMBNAIL_ROOT_PATH` variab
 Production
 ----------
 
-If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (rib/resources/uwsgi/uwsgi.ini.production.template) and symlink it into the uWSGI system config (/etc/uwsgi-emperor/vassals in Ubuntu 16.04).
+If you would like to configure the server into uWSGI (a system service), create an INI file from the template production config file (*rib/resources/uwsgi/uwsgi.ini.production.template*) and symlink it into the uWSGI system config (*/etc/uwsgi-emperor/vassals*, in Ubuntu 16.04).
 
-Don't forget to configure the environment variables already mentioned (`IMAGE_ROOT_PATH`, `THUMBNAIL_ROOT_PATH`) either in uWSGI or at the system elvel (e.g. /etc/environment, in Ubuntu).
+Don't forget to configure the environment variables already mentioned (`IMAGE_ROOT_PATH`, `THUMBNAIL_ROOT_PATH`) either in uWSGI or at the system level (e.g. */etc/environment*, in Ubuntu).
 
 
 uWSGI Configuration Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This will setup the application server the listen on socket-file /tmp/remote_image_browser.sock .
+This will setup the application server the listen on socket-file */tmp/remote_image_browser.sock* .
 
 Requirements:
 
