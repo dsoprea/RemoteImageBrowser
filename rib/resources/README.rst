@@ -174,7 +174,15 @@ Look into `Flask-Cache <https://pythonhosted.org/Flask-Cache>`_ to add a caching
 Screenshots
 ===========
 
+Root listing:
+
 |screenshot1|
+
+Subdirectory listing:
+
+|screenshot3|
+
+Viewing an image:
 
 |screenshot2|
 
@@ -188,6 +196,7 @@ To run the unit-tests::
 
 .. |screenshot1| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot1.png
 .. |screenshot2| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot2.png
+.. |screenshot3| image:: https://github.com/dsoprea/RemoteImageBrowser/raw/master/rib/resources/images/screenshot3.png
 .. |Build_Status| image:: https://travis-ci.org/dsoprea/RemoteImageBrowser.svg?branch=master
    :target: https://travis-ci.org/dsoprea/RemoteImageBrowser
 .. |Coverage_Status| image:: https://coveralls.io/repos/github/dsoprea/RemoteImageBrowser/badge.svg?branch=master
