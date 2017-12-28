@@ -68,7 +68,7 @@ def api_thumbnail_download_get():
 
     try:
         thumbnail_filepath, mimetype = t.generate(filepath)
-    except rib.thumbnail.gnome.ThumbnailNotSupportedError:
+    except rib.exception.ImageError:
         thumbnail_filepath = \
             rib.config.THUMBNAIL_PLACEHOLDER_FILEPATH
 

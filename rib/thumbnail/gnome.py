@@ -52,9 +52,16 @@ class GnomeThumbnailer(rib.thumbnail.thumbnailer_base.ThumbnailerBase):
             if thumbnail is None:
                 raise \
                     rib.exception.ImageError(
-                        "Thumbnail generation failed: [{}]".format(filepath))
+                        "Thumbnail generation failed: [{}]".format(
+                        filepath))
 
-            factory.save_thumbnail(thumbnail, uri, mtime)
+            r = factory.save_thumbnail(thumbnail, uri, mtime)
+            _LOGGER.debug("Save result: [{}]".format(r))
+
             thumbnail_filepath = factory.lookup(uri, mtime)
+            assert \
+                thumbnail_filepath is not None, \
+                "New thumbnail could not be found. Was there a permission " \
+                "problem in writing it?"
 
         return thumbnail_filepath, mimetype
