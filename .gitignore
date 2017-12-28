@@ -3,5 +3,13 @@
 /.tox/
 /remote_image_browser.egg-info/
 /dist/
+/bin/
+/include/
+/local/
+/lib/
+/man/
+/pip-selfcheck.json
+/rib/resources/uwsgi/uwsgi.ini.production
+/share/
 
 *.pyc
