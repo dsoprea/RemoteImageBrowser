@@ -76,18 +76,18 @@ Don't forget to configure the environment variables already mentioned (`IMAGE_RO
 
 
 uWSGI Configuration Example
-===========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This will setup the application server the listen on socket-file /tmp/remote_image_browser.sock .
 
 Requirements:
 
+- Installed in */opt/remote_image_browser*
+- Directory owned by *dustin:dustin*
 - Python 2.7
 - Ubuntu 16.04
 - Virtualenv
 - Gnome thumbnailer
-- Installed in */opt/remote_image_browser*
-- Directory owned by *dustin:dustin*
 
 To setup uWSGI (to host a production configuration) under Ubuntu, install uWSGI::
 
@@ -133,25 +133,42 @@ Both the user/group in the config and the service user/group must be set so that
     # group identifier of uWSGI processes
     gid = dustin
 
-Note that the permissions on the socket were configured as 666, above, so Nginx should not have any permission problems.
+Note that the permissions on the socket were configured as 666 (read-write is always required), above, so Nginx should not have any permission problems.
 
 
 Nginx Configuration Example
-===========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/etc/nginx/sites-enabled
+Requirements:
 
-server {
-    listen 9090;
-    server_name localhost;
+- Installed in */opt/remote_image_browser*
+- Socket owned by *dustin:dustin* with permission 666
+- Static assets served directly but other requests forwarded to /tmp/remote_image_browser.sock
 
-    location / {
-        include         uwsgi_params;
-        uwsgi_pass      unix:/tmp/remote_image_browser.sock;
+Update */etc/nginx/sites-enabled*::
+
+    server {
+        listen 9090;
+        server_name localhost;
+
+        location /s/ {
+            alias /opt/remote_image_browser/rib/resources/static/;
+            autoindex off;
+        }
+
+        location / {
+            include         uwsgi_params;
+            uwsgi_pass      unix:/tmp/remote_image_browser.sock;
+        }
     }
-}
 
 Start/restart the service with "systemctl restart nginx.service".
+
+
+Caching
+=======
+
+Look into `Flask-Cache <https://pythonhosted.org/Flask-Cache>`_ to add a caching layer. At its most basic, it is very simple to configure.
 
 
 Screenshots
