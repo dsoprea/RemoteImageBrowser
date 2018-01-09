@@ -1,0 +1,5 @@
+remote_image_browser
+
+- Should print EXIF times if available.
+- Have a download button that'll download with the original filename
+- Be able to sort by mtime, name, and size
