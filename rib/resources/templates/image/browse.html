@@ -47,7 +47,7 @@ Image Browser
 <div id="files" class="images">
     {% for entry in files %}
     <div class="media">
-      <a href="/api/image/download?filepath={{ entry.rel_filepath | urlencode }}" class="fancybox" data-fancybox="gallery" data-caption="{{ entry.rel_filepath }}">
+      <a href="/api/image/download/{{ entry.rel_filepath }}" class="fancybox" data-fancybox="gallery" data-caption="{{ entry.rel_filepath }}">
         <img class="mr-3 thumbnail" src="/api/thumbnail/download?filepath={{ entry.rel_filepath | urlencode }}">
       </a>
       <div class="media-body">

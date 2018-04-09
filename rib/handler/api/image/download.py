@@ -6,10 +6,8 @@ import rib.app
 import rib.exception
 import rib.utility
 
-@rib.app.APP.route("/api/image/download", methods=['GET'])
-def api_image_download_get():
-    rel_filepath = flask.request.args.get('filepath', '')
-
+@rib.app.APP.route("/api/image/download/<path:rel_filepath>", methods=['GET'])
+def api_image_download_get_by_route(rel_filepath):
     if rel_filepath == '':
         raise \
             rib.exception.HttpArgumentError(
@@ -38,3 +36,4 @@ def api_image_download_get():
         flask.send_file(
             filepath,
             mimetype=mimetype)
+

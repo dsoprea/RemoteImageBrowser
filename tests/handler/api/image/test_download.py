@@ -13,7 +13,7 @@ class TestDownload(unittest.TestCase):
         with rib.test_support.environment(
                 IMAGE_ROOT_PATH=_ASSETS_PATH):
             c = rib.test_support.get_test_client()
-            r = c.get('/api/image/download?filepath=childpath/gorillababy.jpg')
+            r = c.get('/api/image/download/childpath/gorillababy.jpg')
 
             self.assertEquals(r.status_code, 200)
 
